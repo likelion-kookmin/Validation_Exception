@@ -3,11 +3,11 @@ package com.example.crudtest.controller;
 import com.example.crudtest.dto.BoardRequestDto;
 import com.example.crudtest.dto.BoardResponseDto;
 import com.example.crudtest.dto.PasswordUpdateDto;
-import com.example.crudtest.entity.Board;
 import com.example.crudtest.service.BoardService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import jakarta.validation.Valid;
 
 import java.util.List;
 
@@ -24,7 +24,7 @@ public class BoardController {
 
     // CREATE (생성)
     @PostMapping
-    public ResponseEntity<BoardResponseDto> createBoard(@RequestBody BoardRequestDto boardDto) {
+    public ResponseEntity<BoardResponseDto> createBoard(@Valid @RequestBody BoardRequestDto boardDto) {
         BoardResponseDto createdBoard = boardService.createBoard(boardDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdBoard);
     }
@@ -57,7 +57,7 @@ public class BoardController {
 
     // UPDATE (수정)
     @PutMapping("/{id}")
-    public ResponseEntity<BoardResponseDto> updateBoard(@PathVariable Long id, @RequestBody BoardRequestDto boardDto) {
+    public ResponseEntity<BoardResponseDto> updateBoard(@PathVariable Long id, @Valid @RequestBody BoardRequestDto boardDto) {
         BoardResponseDto updatedBoard = boardService.updateBoard(id, boardDto);
         if (updatedBoard != null) {
             return ResponseEntity.ok(updatedBoard);
