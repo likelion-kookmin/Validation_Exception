@@ -48,15 +48,6 @@ public class BoardController {
         return ResponseEntity.ok(boards);
     }
 
-    /*
-    // boards?writer=kim
-    @GetMapping
-    public ResponseEntity<List<Board>> getBoardsByWriter(@RequestParam String writer) {
-        List<Board> boards = boardService.gotBoardByWriter(writer);
-        return ResponseEntity.ok(boards);
-    }
-    */
-
     // boards/search?keyword=스프링
     @GetMapping("/search")
     public ResponseEntity<List<BoardResponseDto>> searchBoards(@RequestParam String search) {
@@ -66,7 +57,7 @@ public class BoardController {
 
     // UPDATE (수정)
     @PutMapping("/{id}")
-    public ResponseEntity<BoardResponseDto> updateBoard(@PathVariable Long id, @RequestBody BoardResponseDto boardDto) {
+    public ResponseEntity<BoardResponseDto> updateBoard(@PathVariable Long id, @RequestBody BoardRequestDto boardDto) {
         BoardResponseDto updatedBoard = boardService.updateBoard(id, boardDto);
         if (updatedBoard != null) {
             return ResponseEntity.ok(updatedBoard);
@@ -95,13 +86,4 @@ public class BoardController {
             return ResponseEntity.notFound().build();
         }
     }
-
-    // Boolean 안 쓰고 예외 처리
-    /*
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteBoard(@PathVariable Long id) {
-        boardService.deleteBoard(id);
-        return ResponseEntity.noContent().build();
-    }
-    */
 }

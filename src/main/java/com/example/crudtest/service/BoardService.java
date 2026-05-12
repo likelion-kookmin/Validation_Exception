@@ -72,7 +72,7 @@ public class BoardService {
     }
 
     // UPDATE (수정)
-    public BoardResponseDto updateBoard(Long id, BoardResponseDto newboardDto) {
+    public BoardResponseDto updateBoard(Long id, BoardRequestDto newboardDto) {
         Board existingBoard = boardRepository.findById(id).orElse(null);
 
         if (existingBoard == null) {
@@ -81,8 +81,6 @@ public class BoardService {
         existingBoard.setTitle(newboardDto.getTitle());
         existingBoard.setContent(newboardDto.getContent());
         existingBoard.setWriter(newboardDto.getWriter());
-        // existingBoard.setPassword(newboardDto.getPassword());
-        // 비밀번호 변경은 보안 문제 때문에 따로 구현 필요
         Board updatedBoard = boardRepository.save(existingBoard);
 
         return toDto(updatedBoard);
@@ -113,26 +111,4 @@ public class BoardService {
         }
         return false;
     }
-
-    // Optioanl 사용
-    /*
-    public boolean deleteBoard(Long id) {
-        return boardRepository.findById(id)
-                .map(board -> {
-                    boardRepository.delete(board);
-                    return true;
-                })
-                .orElse(false);
-    }
-    */
-
-    // Boolean 안 쓰고 예외 처리
-    /*
-    public void deleteBoard(Long id) {
-        Board board = boardRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("게시글 없음"));
-
-        boardRepository.delete(board);
-    }
-    */
 }
